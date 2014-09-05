@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Klasa ma za zadnie przenieść do kontrolera i akcji która jest podana w URL-u.
  * User: Drizzt
  * Date: 05.09.14
  * Time: 20:27
@@ -18,27 +19,36 @@ class Dispatcher
 
     public function dispatch()
     {
+        // Przygotowujemy sobie urla
         $this->_prepareUrl();
-        if (empty($this->_controller) || class_exists($this->_controller)) {
+        // Jeżeli nie istnieje taki kontroller to podstaw domyślny
+        if (empty($this->_controller) || !class_exists($this->_controller)) {
             $oController = new IndexController();
             $oController->init();
             $oController->indexAction();
             $oController->renderView('indexAction');
             return;
         }
+        // Jeśli istnieje taki kontroler to utwórz jego obiekt
         $oController = new $this->_controller();
         $oController->init();
+
+        // Sprawdz istnienie akcji w danym kontrolerze
         $action = $this->_action;
-        if (empty($action) || method_exists($oController,$this->_action)) {
+        if (empty($action) || !method_exists($oController,$this->_action)) {
             $oController->indexAction();
             $oController->renderView('indexAction');
             return;
         }
+        // Jeżeli akcja równierz istnieje to możemy ją wykonać
         $oController->$action();
         $oController->renderView($action);
         return;
     }
 
+    /**
+     * Metoga przygotowuje - wyodrębnia nazwę kontrolera i akcji
+     */
     private function _prepareUrl()
     {
         $urlArray = explode('/', $this->_url);

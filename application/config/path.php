@@ -1,5 +1,6 @@
 <?php
 /**
+ * Plik zawierający wszystkie zmienne globalne
  * User: Drizzt
  * Date: 05.09.14
  * Time: 19:06

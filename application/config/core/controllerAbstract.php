@@ -1,6 +1,6 @@
 <?php
-
 /**
+ * Klasa abstrakcyjna w tym przypadku definiuje nam podstawowe metody które będą nam potrzebne w dispacherze.
  * User: Drizzt
  * Date: 05.09.14
  * Time: 20:54
@@ -15,8 +15,10 @@ abstract class controllerAbstract
      * @var View $view
      */
     protected $view;
-    protected $viewParams=array();
 
+    /**
+     * Zainicjowanie podstawowaych zmiennych dla kontrolera
+     */
     public function init()
     {
         $this->POST = $_POST;
@@ -29,6 +31,11 @@ abstract class controllerAbstract
         $this->view = new View($this->controllerName);
         $this->view->setLayout('default');
     }
+
+    /**
+     * Renderowanie widoku danej akcji w kontrolerze
+     * @param $action
+     */
     public function renderView($action){
         $this->view->setView($action);
         $this->view->render();
