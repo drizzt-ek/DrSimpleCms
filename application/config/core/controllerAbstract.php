@@ -7,8 +7,10 @@
  */
 abstract class controllerAbstract
 {
-    protected $POST = array();
-    protected $GET = array();
+    /**
+     * @var request $request
+     */
+    protected $request;
     protected $model = null;
     protected $controllerName;
     /**
@@ -21,14 +23,21 @@ abstract class controllerAbstract
      */
     public function init()
     {
-        $this->POST = $_POST;
-        $this->GET = $_GET;
+        //Obiekt odpowiedzialny za pobieranie danych z get i post
+        $this->request = new request();
+        //Pobieranie nazwy kontrolera który został wywołany przez dispatcher
         $this->controllerName = get_called_class();
+        //Z nazwy kontrolera tworzymy nazwę modelu który musi być takiej samej nazwy jak kontroler
         $model = str_replace('Controller', 'Model', $this->controllerName);
         if (class_exists($model)) {
             $this->model = new $model();
+        }else{
+            // Jeżeli nie istnieje to zarzuć wyjątkiem :).
+            throw new Exception('Nie istnieje model o nazwie '.$model);
         }
+        //Inicjujemy obiekt który ma za zadanie zarządzać layoutem.
         $this->view = new View($this->controllerName);
+        //Ustawiamy domyślny layout aplikacji
         $this->view->setLayout('default');
     }
 
@@ -37,7 +46,9 @@ abstract class controllerAbstract
      * @param $action
      */
     public function renderView($action){
+        //Przekaż do obiektu View akcje która została wykonana
         $this->view->setView($action);
+        //Zwróć na ekran wyrenderowaną treść
         $this->view->render();
     }
 } 
