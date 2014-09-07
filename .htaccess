@@ -1,6 +1,3 @@
-#local,production,maintenance
-SetEnv APPLICATION_MODE local
-
 RewriteEngine On
 RewriteBase /
 

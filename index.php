@@ -7,10 +7,12 @@
  * Date: 05.09.14
  * Time: 18:42
  */
+
+// Autoloading klas obiektów do któych się odwołujemy.
 include_once '\application\config\autoload.php';
 
 /**
- * To alias do metody var_dump do łatwiejszego debagu.
+ * To alias do metody var_dump do łatwiejszego debug-u.
  * @param $const
  * @param bool $exit
  */
@@ -23,6 +25,7 @@ function vd($const,$exit=false){
         exit;
     }
 }
+
 // Przekierowanie na odpowiedni kontroler i akcję.
 $dispatcher = new Dispatcher();
 $dispatcher->dispatch();

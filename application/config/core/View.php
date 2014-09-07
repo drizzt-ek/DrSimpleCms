@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Obiekt odpowiedzialny za render widoku.
+ * Obiekt odpowiedzialny za render widoku. I przekazanie do niego zmiennych
  * User: Drizzt
  * Date: 05.09.14
  * Time: 21:25
@@ -26,7 +26,7 @@ class View
     public function assign($name, $value)
     {
         if (empty($name)) {
-            return;
+            throw new Exception("Error. Please set variable name in assign method.");
         }
         $this->params[$name] = $value;
     }
@@ -70,6 +70,8 @@ class View
         $path = VIEW_ROOT . $folderName . DS . $this->_viewName . '.phtml';
         if (file_exists($path)) {
             include_once $path;
+        } else {
+            throw new Exception("Do not find view file: $this->_viewName.");
         }
     }
 
@@ -81,6 +83,8 @@ class View
         $path = THEMES_ROOT . $this->_layout . '.phtml';
         if (file_exists($path)) {
             include_once $path;
+        } else {
+            throw new Exception("Do not find layout file: $this->_layout.");
         }
     }
 }
