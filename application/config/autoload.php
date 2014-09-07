@@ -9,7 +9,10 @@
 
 include_once 'path.php';
 
-function __autoload($classname)
+
+spl_autoload_extensions(".php"); // comma-separated list
+
+function autoload($classname)
 {
     $paths = array(
         CORE_ROOT,
@@ -23,3 +26,4 @@ function __autoload($classname)
         }
     }
 }
+spl_autoload_register('autoload');
