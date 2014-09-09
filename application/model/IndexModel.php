@@ -6,6 +6,7 @@
  */
 
 
-class IndexModel extends BaseModel {
+namespace application\model;
+class IndexModel extends \application\config\core\ModelAbstract {
 
 } 

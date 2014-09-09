@@ -1,11 +1,13 @@
 <?php
+
 /**
  * User: Drizzt
  * Date: 05.09.14
  * Time: 19:13
  */
 
-class ContactController extends BaseController
+namespace application\controller;
+class ContactController extends \application\config\core\ControllerAbstract
 {
     public function indexAction()
     {

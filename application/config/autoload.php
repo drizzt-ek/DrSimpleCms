@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Autoload - ma za zadnie automatycznie dodać plik klasy do której się odwołujemy
  * User: Drizzt
@@ -6,24 +7,22 @@
  * Time: 19:05
  */
 
+namespace application\config;
 
-include_once 'path.php';
 
+spl_autoload_extensions(".php");
 
-spl_autoload_extensions(".php"); // comma-separated list
-
-function autoload($classname)
+function autoload($className)
 {
-    $paths = array(
-        CORE_ROOT,
-        CONTROLLER_ROOT,
-        MODEL_ROOT,
-    );
-    foreach ($paths as $path) {
-        if (file_exists($path . $classname . '.php')) {
-            require_once $path . $classname . '.php';
-            return;
-        }
+    $className = ltrim($className, '\\');
+    $fileName  = '';
+    $namespace = '';
+    if ($lastNsPos = strrpos($className, '\\')) {
+        $namespace = substr($className, 0, $lastNsPos);
+        $className = substr($className, $lastNsPos + 1);
+        $fileName  = str_replace('\\', DS, $namespace) . DS;
     }
+    $fileName .= str_replace('_', DS, $className) . '.php';
+    require $fileName;
 }
-spl_autoload_register('autoload');
+spl_autoload_register('application\config\autoload');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plik zawierający wszystkie zmienne globalne
  * User: Drizzt
@@ -6,7 +7,8 @@
  * Time: 19:06
  */
 
-define ('DS', "/"); // Director separator
+namespace application\config;
+define ('DS', DIRECTORY_SEPARATOR); // Director separator
 
 define ('PATH_ROOT', dirname(dirname(dirname(__FILE__)).DS).DS); /* root */
 define ('APPLICATION_ROOT',PATH_ROOT.'application'.DS ); /* root */

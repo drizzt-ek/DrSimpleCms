@@ -5,10 +5,12 @@
  * Date: 05.09.14
  * Time: 20:54
  */
-abstract class controllerAbstract
+
+namespace application\config\core;
+abstract class ControllerAbstract
 {
     /**
-     * @var request $request
+     * @var Request $request
      */
     protected $request;
     protected $model = null;
@@ -24,19 +26,21 @@ abstract class controllerAbstract
     public function init()
     {
         //Obiekt odpowiedzialny za pobieranie danych z get i post
-        $this->request = new request();
+        $this->request = new \application\config\core\Request();
         //Pobieranie nazwy kontrolera który został wywołany przez dispatcher
         $this->controllerName = get_called_class();
         //Z nazwy kontrolera tworzymy nazwę modelu który musi być takiej samej nazwy jak kontroler
-        $model = str_replace('Controller', 'Model', $this->controllerName);
+        $controllerNameExplodeList = explode('\\', $this->controllerName);
+        $this->controllerName = end($controllerNameExplodeList);
+        $model = '\application\model\\'.str_replace('Controller', 'Model', $this->controllerName);
         if (class_exists($model)) {
             $this->model = new $model();
         }else{
             // Jeżeli nie istnieje to zarzuć wyjątkiem :).
-            throw new Exception('Nie istnieje model o nazwie '.$model);
+            throw new \Exception('Nie istnieje model o nazwie '.$model);
         }
         //Inicjujemy obiekt który ma za zadanie zarządzać layoutem.
-        $this->view = new View($this->controllerName);
+        $this->view = new \application\config\core\View($this->controllerName);
         //Ustawiamy domyślny layout aplikacji
         $this->view->setLayout('default');
     }

@@ -6,6 +6,7 @@
  * Date: 05.09.14
  * Time: 20:27
  */
+namespace application\config\core;
 class Dispatcher
 {
     private $_url;
@@ -23,26 +24,26 @@ class Dispatcher
         $this->_prepareUrl();
         // Jeżeli nie istnieje taki kontroller to podstaw domyślny
         if (empty($this->_controller) || !class_exists($this->_controller)) {
-            $oController = new IndexController();
-            $oController->init();
-            $oController->indexAction();
-            $oController->renderView('indexAction');
+            $controller = new \application\controller\IndexController();
+            $controller->init();
+            $controller->indexAction();
+            $controller->renderView('indexAction');
             return;
         }
         // Jeśli istnieje taki kontroler to utwórz jego obiekt
-        $oController = new $this->_controller();
-        $oController->init();
+        $controller = new $this->_controller();
+        $controller->init();
 
         // Sprawdz istnienie akcji w danym kontrolerze
         $action = $this->_action;
-        if (empty($action) || !method_exists($oController,$this->_action)) {
-            $oController->indexAction();
-            $oController->renderView('indexAction');
+        if (empty($action) || !method_exists($controller,$this->_action)) {
+            $controller->indexAction();
+            $controller->renderView('indexAction');
             return;
         }
         // Jeżeli akcja równierz istnieje to możemy ją wykonać
-        $oController->$action();
-        $oController->renderView($action);
+        $controller->$action();
+        $controller->renderView($action);
         return;
     }
 
@@ -60,11 +61,11 @@ class Dispatcher
         //Pierwszy element tablicy to element pusty
         //Drugi element tablicy powinien być controlerem
         if (!empty($urlArray[1])) {
-            $this->_controller = strtolower($urlArray[1]) . 'Controller';
+            $this->_controller = '\application\controller\\'.$urlArray[1] . 'Controller';
         }
         //Trzeci element tablicy powinien być akcją
         if (!empty($urlArray[2])) {
-            $this->_action = strtolower($urlArray[2]) . 'Action';
+            $this->_action = $urlArray[2] . 'Action';
         }
 
         //TODO Może w przyszłości dodamy obsługę parametrów z urla zamiast z geta.

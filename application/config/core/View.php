@@ -6,6 +6,7 @@
  * Date: 05.09.14
  * Time: 21:25
  */
+namespace application\config\core;
 class View
 {
     private $params = array();
@@ -26,7 +27,7 @@ class View
     public function assign($name, $value)
     {
         if (empty($name)) {
-            throw new Exception("Error. Please set variable name in assign method.");
+            throw new \Exception("Error. Please set variable name in assign method.");
         }
         $this->params[$name] = $value;
     }
@@ -71,7 +72,7 @@ class View
         if (file_exists($path)) {
             include_once $path;
         } else {
-            throw new Exception("Do not find view file: $this->_viewName.");
+            throw new \Exception("Do not find view file: $this->_viewName.");
         }
     }
 
@@ -84,7 +85,7 @@ class View
         if (file_exists($path)) {
             include_once $path;
         } else {
-            throw new Exception("Do not find layout file: $this->_layout.");
+            throw new \Exception("Do not find layout file: $this->_layout.");
         }
     }
 }

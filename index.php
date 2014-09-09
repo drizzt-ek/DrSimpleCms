@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Ten plik właściwie służy tylko do tego aby przekierować nas na odpowiedni kontroler i akcje.
  * htaccess pomaga nam w tej czynnosci.
@@ -7,25 +8,14 @@
  * Date: 05.09.14
  * Time: 18:42
  */
-
+// Ladowanie wszystkich ważnych stałych systemowych
+include_once dirname(__FILE__).'/application/config/path.php';
+// Hmm plik śmietnik metod np vd
+include_once CONFIG_ROOT.'tools.php';
 // Autoloading klas obiektów do któych się odwołujemy.
-include_once '\application\config\autoload.php';
+include_once CONFIG_ROOT.'autoload.php';
 
-/**
- * To alias do metody var_dump do łatwiejszego debug-u.
- * @param $const
- * @param bool $exit
- */
-function vd($const,$exit=false){
-    echo '<pre>';
-    var_dump($const);
-    echo '</pre>';
-
-    if($exit){
-        exit;
-    }
-}
 
 // Przekierowanie na odpowiedni kontroler i akcję.
-$dispatcher = new Dispatcher();
+$dispatcher = new \application\config\core\Dispatcher();
 $dispatcher->dispatch();

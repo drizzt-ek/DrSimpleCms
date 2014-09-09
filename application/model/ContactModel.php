@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: Drizzt
  * Date: 05.09.14
@@ -6,6 +7,7 @@
  */
 
 
-class ContactModel extends BaseModel {
+namespace application\model;
+class ContactModel extends \application\config\core\ModelAbstract {
 
 } 

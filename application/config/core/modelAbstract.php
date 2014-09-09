@@ -5,6 +5,7 @@
  * Time: 21:39
  */
 
-class modelAbstract {
+namespace application\config\core;
+class ModelAbstract {
 
 } 

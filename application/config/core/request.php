@@ -1,12 +1,12 @@
 <?php
-
 /**
  * Obiekt do obsługi requestu ;)
  * User: Drizzt
  * Date: 06.09.14
  * Time: 22:29
  */
-class request
+namespace application\config\core;
+class Request
 {
     private $_post;
     private $_get;
